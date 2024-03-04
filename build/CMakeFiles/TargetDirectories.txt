@@ -1,0 +1,5 @@
+D:/workspace/envi_function/build/CMakeFiles/envi_function.dir
+D:/workspace/envi_function/build/CMakeFiles/package.dir
+D:/workspace/envi_function/build/CMakeFiles/package_source.dir
+D:/workspace/envi_function/build/CMakeFiles/edit_cache.dir
+D:/workspace/envi_function/build/CMakeFiles/rebuild_cache.dir
