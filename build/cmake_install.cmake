@@ -1,4 +1,4 @@
-# Install script for directory: D:/workspace/envi_function
+# Install script for directory: C:/Users/Deongaree/Desktop/envi_function
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,7 +34,7 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "D:/software/msys64/ucrt64/bin/objdump.exe")
+  set(CMAKE_OBJDUMP "D:/software/mingw64/bin/objdump.exe")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "D:/workspace/envi_function/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/Deongaree/Desktop/envi_function/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

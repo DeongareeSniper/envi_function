@@ -1,8 +1,8 @@
 [
 {
-  "directory": "D:/workspace/envi_function/build",
-  "command": "D:\\software\\msys64\\ucrt64\\bin\\g++.exe   -g -o CMakeFiles\\envi_function.dir\\src\\main.cpp.obj -c D:\\workspace\\envi_function\\src\\main.cpp",
-  "file": "D:/workspace/envi_function/src/main.cpp",
+  "directory": "C:/Users/Deongaree/Desktop/envi_function/build",
+  "command": "D:\\software\\mingw64\\bin\\g++.exe   -g -o CMakeFiles\\envi_function.dir\\src\\main.cpp.obj -c C:\\Users\\Deongaree\\Desktop\\envi_function\\src\\main.cpp",
+  "file": "C:/Users/Deongaree/Desktop/envi_function/src/main.cpp",
   "output": "CMakeFiles/envi_function.dir/src/main.cpp.obj"
 }
 ]

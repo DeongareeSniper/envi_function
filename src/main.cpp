@@ -143,12 +143,12 @@ float worldview_water_index(float coastal, float nir2)
     return wvwi;
 }
 
-// int main(int argc, const char **argv)
-// {
-//     int red, nir;
-//     red = 0.6;
-//     nir = 0.76;
-//     float bai = burn_area_index(red, nir);
-//     std::cout << "BAI is" << bai << "%" << std::endl;
-//     return 0;
-// }
+int main(int argc, const char **argv)
+{
+    int red, nir;
+    red = 0.6;
+    nir = 0.76;
+    float bai = burn_area_index(red, nir);
+    std::cout << "BAI is" << bai << "%" << std::endl;
+    return 0;
+}
