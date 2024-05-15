@@ -3,276 +3,337 @@
 Email：782381967@qq.com
 主题：ENVI光谱函数库
 时间：2024-01-15
-
-备注：传入参数为像素DN值
 */
 
 #include "../include/SpectralIndices.h"
 using namespace std;
 
-// 为避免在判断中与窄频段冲突，下列波长为该频段中心波长（nm）加1
-#define BLUE 471
-#define GREEN 551
-#define RED 651
-#define NIR 861
-#define SWIR1 1651
-#define SWIR2 2221
-#define p715_wide 716
-#define p750_narrow 751
-#define p800_wide 801
-
-// 说明文档里没有，无法确定中心波长，用0占位，以下参数用于wvbi,wvnhfd,wvwi
-#define Red_Edge 0
-#define Coastal 0
-#define NIR2 0
-
-// float转化为6位小数，并四舍五入
-float transform_to_six_decimal_places(float x)
-{
-    float a, b;
-    a = x * 1000000;
-    b = round(a) / 1000000;
-    return b;
-}
-
-// 判断所寻找的中心波段，确定该波段范围，并判断该波段是否符合范围要求
-int determine_band_range(float value_of_band, int value_of_needed_band)
-{
-    switch (value_of_needed_band)
-    {
-    case 445:
-        if (value_of_band >= 435 && value_of_band <= 448)
-            return 1;
-        break;
-    case 450:
-        if (value_of_band >= 425 && value_of_band <= 475)
-            return 1;
-        break;
-    case BLUE: // 470
-        if (value_of_band >= 400 && value_of_band <= 500)
-            return 1;
-        break;
-    case 500:
-        if (value_of_band >= 480 && value_of_band <= 520)
-            return 1;
-        break;
-    case 510:
-        if (value_of_band >= 500 && value_of_band <= 515)
-            return 1;
-        break;
-    case 531:
-        if (value_of_band >= 525 && value_of_band <= 550)
-            return 1;
-        break;
-    case 550:
-        if (value_of_band >= 540 && value_of_band <= 560)
-            return 1;
-        break;
-    case GREEN: // 550
-        if (value_of_band >= 500 && value_of_band <= 600)
-            return 1;
-        break;
-    case 570:
-        if (value_of_band >= 560 && value_of_band <= 575)
-            return 1;
-        break;
-    case RED: // 650
-        if (value_of_band >= 600 && value_of_band <= 700)
-            return 1;
-        break;
-    case 670:
-        if (value_of_band >= 650 && value_of_band <= 690)
-            return 1;
-        break;
-    case 699:
-        if (value_of_band >= 650 && value_of_band <= 735)
-            return 1;
-        break;
-    case 700:
-        if (value_of_band >= 680 && value_of_band <= 730)
-            return 1;
-        break;
-    case 705:
-        if (value_of_band >= 697 && value_of_band <= 708)
-            return 1;
-        break;
-    case 715:
-        if (value_of_band >= 714 && value_of_band <= 716)
-            return 1;
-        break;
-    case p715_wide: // 715
-        if (value_of_band >= 710 && value_of_band <= 719)
-            return 1;
-        break;
-    case 720:
-        if (value_of_band >= 718 && value_of_band <= 722)
-            return 1;
-        break;
-    case 726:
-        if (value_of_band >= 725 && value_of_band <= 727)
-            return 1;
-        break;
-    case 734:
-        if (value_of_band >= 730 && value_of_band <= 736)
-            return 1;
-        break;
-    case 740:
-        if (value_of_band >= 730 && value_of_band <= 750)
-            return 1;
-        break;
-    case 747:
-        if (value_of_band >= 742 && value_of_band <= 748)
-            return 1;
-        break;
-    case 750:
-        if (value_of_band >= 730 && value_of_band <= 780)
-            return 1;
-        break;
-    case p750_narrow: // 750
-        if (value_of_band >= 730 && value_of_band <= 760)
-            return 1;
-        break;
-    case 795:
-        if (value_of_band >= 720 && value_of_band <= 800)
-            return 1;
-        break;
-    case 800:
-        if (value_of_band >= 780 && value_of_band <= 865)
-            return 1;
-        break;
-    case p800_wide: // 800
-        if (value_of_band >= 750 && value_of_band <= 870)
-            return 1;
-        break;
-    case 819:
-        if (value_of_band >= 815 && value_of_band <= 824)
-            return 1;
-        break;
-    case 857:
-        if (value_of_band >= 854 && value_of_band <= 860)
-            return 1;
-        break;
-    case 860:
-        if (value_of_band >= 841 && value_of_band <= 876)
-            return 1;
-        break;
-    case NIR: // 860
-        if (value_of_band >= 760 && value_of_band <= 960)
-            return 1;
-        break;
-    case 900:
-        if (value_of_band >= 860 && value_of_band <= 910)
-            return 1;
-        break;
-    case 970:
-        if (value_of_band >= 965 && value_of_band <= 975)
-            return 1;
-        break;
-    case 990:
-        if (value_of_band >= 830 && value_of_band <= 995)
-            return 1;
-        break;
-    case 1241:
-        if (value_of_band >= 1230 && value_of_band <= 1250)
-            return 1;
-        break;
-    case 1510:
-        if (value_of_band >= 1500 && value_of_band <= 1515)
-            return 1;
-        break;
-    case 1599:
-        if (value_of_band >= 1590 && value_of_band <= 1620)
-            return 1;
-        break;
-    case 1640:
-        if (value_of_band >= 1628 && value_of_band <= 1652)
-            return 1;
-        break;
-    case 1649:
-        if (value_of_band >= 1645 && value_of_band <= 1655)
-            return 1;
-        break;
-    case SWIR1: // 1650
-        if (value_of_band >= 1550 && value_of_band <= 1750)
-            return 1;
-        break;
-    case 1680:
-        if (value_of_band >= 1670 && value_of_band <= 1690)
-            return 1;
-        break;
-    case 1754:
-        if (value_of_band >= 1750 && value_of_band <= 1758)
-            return 1;
-        break;
-    case 2000:
-        if (value_of_band >= 1980 && value_of_band <= 2040)
-            return 1;
-        break;
-    case 2100:
-        if (value_of_band >= 2085 && value_of_band <= 2110)
-            return 1;
-        break;
-    case 2130:
-        if (value_of_band >= 2105 && value_of_band <= 2155)
-            return 1;
-        break;
-    case 2200:
-        if (value_of_band >= 2170 && value_of_band <= 2220)
-            return 1;
-        break;
-    case SWIR2: // 2220
-        if (value_of_band >= 2080 && value_of_band <= 2350)
-            return 1;
-        break;
-    }
-    return 0;
-};
-
-// 寻找中心波段,返回查找的波段的编号,后续还需要确定是否在波段范围内
-int find_central_band(float *value_array_of_all_band, int size_of_all_band, int value_of_needed_band)
-{
-    int i, a;
-    float j, k, x, y;
-    int band_number = -1;
-    float sub_value = 1000;
-    a = value_of_needed_band;
-    if (a == BLUE || a == RED || a == GREEN ||
-        a == NIR || a == SWIR1 || a == SWIR2 ||
-        a == p715_wide || a == p750_narrow || a == p800_wide)
-    {
-        a--;
-    }
-    for (i = 0; i < size_of_all_band; i++)
-    {
-        x = value_array_of_all_band[i];
-        y = determine_band_range(x, value_of_needed_band);
-        if (y == 1)
-        {
-            j = x - (float)a;
-            k = fabs(j);
-            if (k < sub_value)
-            {
-                band_number = i;
-                sub_value = k;
-            }
-        }
-    }
-    return band_number;
-}
-
 // 光谱指数计算模块对外接口
 int spectral_index_calculation(int ***raw_data, int x, int y, int z, float *value_array_of_all_band,
                                SpectralIndices spectralindices_index, float **result)
 {
-    
+    switch (spectralindices_index)
+    {
+    case BAI:
+        bai(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case NBR:
+        nbr(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case NBRT1:
+        nbrt1(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case CMR:
+        cmr(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case FMR:
+        fmr(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case IOR:
+        ior(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case WV_II:
+        wv_ii(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case WV_SI:
+        wv_si(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case MNDWI:
+        mndwi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case NDBI:
+        ndbi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case NDMI:
+        ndmi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case NDSI:
+        ndsi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case WV_BI:
+        wv_bi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case WV_NHFD:
+        wv_nhfd(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case WV_WI:
+        wv_wi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case ARVI:
+        arvi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case DVI:
+        dvi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case EVI:
+        evi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case GEMI:
+        gemi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case GARI:
+        gari(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case GDVI:
+        gdvi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case GNDVI:
+        gndvi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case GRVI:
+        grvi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case GVI:
+        gvi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case IPVI:
+        ipvi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case LAI:
+        lai(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case MNLI:
+        mnli(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case MSR:
+        msr(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case NLI:
+        nli(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case NDVI:
+        ndvi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case OSAVI:
+        osavi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case RDVI:
+        rdvi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case SAVI:
+        savi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case SR:
+        sr(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case SGI:
+        sgi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case TDVI:
+        tdvi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case VARI:
+        vari(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case WV_VI:
+        wv_vi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case MCARI:
+        mcari(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case MCARI2:
+        mcari2(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case MRENDVI:
+        mrendvi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case MRESR:
+        mresr(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case MTVI:
+        mtvi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case MTVI2:
+        mtvi2(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case RENDVI:
+        rendvi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case REPI:
+        repi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case TCARI:
+        tcari(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case TVI:
+        tvi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case VREI1:
+        vrei1(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case VREI2:
+        vrei2(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case NDNI:
+        ndni(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case MSI:
+        msi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case NDII:
+        ndii(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case NDWI:
+        ndwi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case NMDI:
+        nmdi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case WBI:
+        wbi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case NDLI:
+        ndli(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case CAI:
+        cai(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case PSRI:
+        psri(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case ARI1:
+        ari1(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case ARI2:
+        ari2(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case CRI1:
+        cri1(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case CRI2:
+        cri2(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case PRI:
+        pri(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case SIPI:
+        sipi(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    case RGRI:
+        rgri(raw_data, x, y, z, value_array_of_all_band, result);
+        return 1;
+        break;
+    default:
+        return 0;
+        break;
+    }
 }
 
+//以下为一个计算NDVI的示例，可以作为如何使用本函数库的参考示例
 // testing
 int main(int argc, const char **argv)
 {
-    float a[10] = {100.65465, 200, 380.5648, 420.98216, 469.9999, 470.1, 498, 500, 550.854, 600};
-    int b;
-    b = find_central_band(a, 10, BLUE);
-    cout << "band is " << b << endl;
+    int raw[2][2][5] = {
+        {{0, 289, 0, 3550, 0},
+         {0, 232, 0, 2769, 0}},
+        {{0, 1453, 0, 1986, 0},
+         {0, 3273, 0, 3419, 0}}};
+    // float result[2][2];
+    float **result = new float *[2];
+    for (int i = 0; i < 2; ++i)
+    {
+        result[i] = new float[2];
+    }
+    float a[5] = {600, 649, 800, 850, 960};
+    int ***raw_data = new int **[2];
+    for (int i = 0; i < 2; ++i)
+    {
+        raw_data[i] = new int *[2];
+        for (int j = 0; j < 2; ++j)
+        {
+            raw_data[i][j] = new int[5];
+            for (int k = 0; k < 5; ++k)
+            {
+                raw_data[i][j][k] = raw[i][j][k];
+            }
+        }
+    }
+    spectral_index_calculation(raw_data, 2, 2, 5, a, NDVI, result);
+    for (int i = 0; i < 2; i++)
+    {
+        for (int j = 0; j < 2; j++)
+        {
+            cout << "ndvi is " << result[i][j] << endl;
+        }
+    }
+    for (int i = 0; i < 2; ++i)
+    {
+        for (int j = 0; j < 2; ++j)
+        {
+            delete[] raw_data[i][j];
+        }
+        delete[] raw_data[i];
+    }
+    delete[] raw_data;
+    for (int i = 0; i < 2; ++i)
+    {
+        delete[] result[i];
+    }
+    delete[] result;
     return 0;
 }
