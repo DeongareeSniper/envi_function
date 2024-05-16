@@ -1,4 +1,6 @@
 #include "../include/SpectralIndices.h"
+#include <vector>
+#include <algorithm>
 using namespace std;
 
 void bai(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
@@ -34,7 +36,7 @@ void nbr(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, f
 ////////////////////////////////////////////////////////////////
 void nbrt1(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
 {
-    int swir2_num, nir_num,thermal_num;
+    int swir2_num, nir_num, thermal_num;
     swir2_num = find_central_band(value_array_of_all_band, z, SWIR2);
     nir_num = find_central_band(value_array_of_all_band, z, NIR);
     thermal_num = find_central_band(value_array_of_all_band, z, NIR);
@@ -43,7 +45,7 @@ void nbrt1(int ***raw_data, int x, int y, int z, float *value_array_of_all_band,
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = normalized_burn_ratio_thermal_1(raw_data[i][j][swir2_num], raw_data[i][j][nir_num],raw_data[i][j][thermal_num]);
+            float a = normalized_burn_ratio_thermal_1(raw_data[i][j][swir2_num], raw_data[i][j][nir_num], raw_data[i][j][thermal_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
@@ -515,10 +517,10 @@ void sr(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, fl
 }
 void sgi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
 {
-    int a, b, c, d,n,m;
+    int a, b, c, d, n, m;
     float sgi;
-    c=0;
-    d=0;
+    c = 0;
+    d = 0;
     for (int i = 0; i < x; ++i)
     {
         for (int j = 0; j < y; ++j)
@@ -528,10 +530,10 @@ void sgi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, f
                 a = value_array_of_all_band[k];
                 if (a >= 500 && a < 600)
                 {
-                    c+=raw_data[i][j][z];//绿光
+                    c += raw_data[i][j][z]; // 绿光
                     n++;
                 }
-                sgi=(float)c/(float)n;
+                sgi = (float)c / (float)n;
                 result[i][j] = transform_to_six_decimal_places(sgi);
             }
         }
@@ -695,15 +697,40 @@ void rendvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band
     }
 }
 
-
-
 //----------------------------------------------------------------
 void repi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
 {
+    // int a;
+    // float dx, dy;
+    // vector<float> reflectances;
+    // vector<float> wavelengths;
+    // vector<float> derivatives(wavelengths.size() - 1);
+    // for (int i = 0; i < x; ++i)
+    // {
+    //     for (int j = 0; j < y; ++j)
+    //     {
+    //         for (int k = 0; k < z; ++k)
+    //         {
+    //             a = value_array_of_all_band[k];
+    //             if (a >= 690 && a <= 740)
+    //             {
+    //                 reflectances.push_back((float)raw_data[i][j][k]);
+    //                 wavelengths.push_back(a);
+    //             }
+    //         }
+    //         for (int b = 0; b < wavelengths.size() - 1; ++b)
+    //         {
+    //             dx = wavelengths[b + 1] - wavelengths[b];
+    //             dy = reflectances[b + 1] - reflectances[b];
+    //             derivatives[b] = dy / dx;
+    //         }
+    //         auto maxIt = max_element(derivatives.begin(), derivatives.end());
+    //         size_t maxIndex = distance(derivatives.begin(), maxIt);
+    //         result[i][j] = (wavelengths[maxIndex] + wavelengths[maxIndex + 1]) / 2.0;
+    //     }
+    // }
 }
 //----------------------------------------------------------------
-
-
 
 void tcari(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
 {
@@ -1001,10 +1028,10 @@ void sipi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
 }
 void rgri(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
 {
-    int a, b, c, d,n,m;
+    int a, b, c, d, n, m;
     float rgri;
-    c=0;
-    d=0;
+    c = 0;
+    d = 0;
     for (int i = 0; i < x; ++i)
     {
         for (int j = 0; j < y; ++j)
@@ -1014,15 +1041,15 @@ void rgri(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
                 a = value_array_of_all_band[k];
                 if (a >= 600 && a < 700)
                 {
-                    c+=raw_data[i][j][z];//红光
+                    c += raw_data[i][j][z]; // 红光
                     n++;
                 }
                 if (a >= 500 && a < 600)
                 {
-                    d+=raw_data[i][j][z];//绿光
+                    d += raw_data[i][j][z]; // 绿光
                     m++;
                 }
-                rgri=((float)c/(float)n)/((float)d/(float)m);
+                rgri = ((float)c / (float)n) / ((float)d / (float)m);
                 result[i][j] = transform_to_six_decimal_places(rgri);
             }
         }

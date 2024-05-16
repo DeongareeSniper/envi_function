@@ -1,9 +1,8 @@
 #include "../include/SpectralIndices_interface.h"
 using namespace std;
 
-
-//以下为一个计算NDVI的示例，可以作为如何使用本函数库的参考示例
-// testing
+// 以下为一个计算NDVI的示例，可以作为如何使用本函数库的参考示例
+//  testing
 int main(int argc, const char **argv)
 {
     int raw[2][2][5] = {

@@ -1,5 +1,6 @@
 #include "../include/SpectralIndices_math.h"
 using namespace std;
+
 void bai(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result);
 void nbr(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result);
 void nbrt1(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result);
