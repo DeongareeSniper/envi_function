@@ -447,11 +447,8 @@ void ndvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            // cout << "nir "<<raw_data[i][j][nir_num]<<endl;
-            // cout << "red "<<raw_data[i][j][red_num]<<endl;
             float a = normalized_difference_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
             result[i][j] = transform_to_six_decimal_places(a);
-            // cout << result[i][j] << endl;
         }
     }
 }
