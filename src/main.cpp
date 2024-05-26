@@ -6,11 +6,29 @@ using namespace std;
 //  testing
 int main(int argc, const char **argv)
 {
-    int raw[2][2][5] = {
-        {{390, 638, 858, 2931, 2772},
-         {0, 304, 562, 3288, 3346}},
-        {{164, 372, 637, 3329, 3123},
-         {3047, 3115, 3153, 3562, 3339}}};
+    int raw[5][2][2] = 
+    {
+        {
+            {390,0},
+            {164,3047}
+        },
+        {
+            {638,304},
+            {372,3115}
+        },
+        {
+            {858,562},
+            {637,3153}
+        },
+        {
+            {2931,3288},
+            {3329,3562}
+        },
+        {
+            {2772,3346},
+            {3126,3339}
+        }
+    };
     // double result[2][2];
     double **result = new double *[2];
     for (int i = 0; i < 2; ++i)
@@ -19,19 +37,19 @@ int main(int argc, const char **argv)
     }
     double a[5] = {420.0348, 650.4232, 555.0990, 859.4069, 1019.4377};
     int ***raw_data = new int **[2];
-    for (int i = 0; i < 2; ++i)
+    for (int i = 0; i < 5; ++i)
     {
         raw_data[i] = new int *[2];
         for (int j = 0; j < 2; ++j)
         {
             raw_data[i][j] = new int[5];
-            for (int k = 0; k < 5; ++k)
+            for (int k = 0; k < 2; ++k)
             {
                 raw_data[i][j][k] = raw[i][j][k];
             }
         }
     }
-    spectral_index_calculation(raw_data, 2, 2, 5, a, RDVI, result);
+    spectral_index_calculation(raw_data, 5, 2, 2, a, RDVI, result);
     for (int i = 0; i < 2; i++)
     {
         for (int j = 0; j < 2; j++)
