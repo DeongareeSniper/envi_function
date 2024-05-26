@@ -36,7 +36,7 @@ int main(int argc, const char **argv)
         result[i] = new double[2];
     }
     double a[5] = {420.0348, 650.4232, 555.0990, 859.4069, 1019.4377};
-    int ***raw_data = new int **[2];
+    int ***raw_data = new int **[5];
     for (int i = 0; i < 5; ++i)
     {
         raw_data[i] = new int *[2];
@@ -57,7 +57,7 @@ int main(int argc, const char **argv)
             cout << "ndvi is " << setprecision(8) << result[i][j] << endl;
         }
     }
-    for (int i = 0; i < 2; ++i)
+    for (int i = 0; i < 5; ++i)
     {
         for (int j = 0; j < 2; ++j)
         {
