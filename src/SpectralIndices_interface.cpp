@@ -10,8 +10,8 @@ using namespace std;
 
 // 光谱指数计算模块对外接口
 
-int spectral_index_calculation(int ***raw_data, int x, int y, int z, float *value_array_of_all_band,
-                               SpectralIndices spectralindices_index, float **result)
+int spectral_index_calculation(int ***raw_data, int x, int y, int z, double *value_array_of_all_band,
+                               SpectralIndices spectralindices_index, double **result)
 {
     switch (spectralindices_index)
     {

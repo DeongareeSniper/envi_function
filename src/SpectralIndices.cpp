@@ -3,7 +3,7 @@
 #include <algorithm>
 using namespace std;
 
-void bai(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void bai(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int red_num, nir_num;
     red_num = find_central_band(value_array_of_all_band, z, RED);
@@ -13,12 +13,12 @@ void bai(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, f
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = burn_area_index(raw_data[i][j][red_num], raw_data[i][j][nir_num]);
+            double a = burn_area_index(raw_data[i][j][red_num], raw_data[i][j][nir_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void nbr(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void nbr(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int swir2_num, nir_num;
     swir2_num = find_central_band(value_array_of_all_band, z, SWIR2);
@@ -28,13 +28,13 @@ void nbr(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, f
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = normalized_burn_ratio(raw_data[i][j][swir2_num], raw_data[i][j][nir_num]);
+            double a = normalized_burn_ratio(raw_data[i][j][swir2_num], raw_data[i][j][nir_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
 ////////////////////////////////////////////////////////////////
-void nbrt1(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void nbrt1(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int swir2_num, nir_num, thermal_num;
     swir2_num = find_central_band(value_array_of_all_band, z, SWIR2);
@@ -45,13 +45,13 @@ void nbrt1(int ***raw_data, int x, int y, int z, float *value_array_of_all_band,
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = normalized_burn_ratio_thermal_1(raw_data[i][j][swir2_num], raw_data[i][j][nir_num], raw_data[i][j][thermal_num]);
+            double a = normalized_burn_ratio_thermal_1(raw_data[i][j][swir2_num], raw_data[i][j][nir_num], raw_data[i][j][thermal_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
 ////////////////////////////////////////////////////////////////
-void cmr(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void cmr(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int swir1_num, swir2_num;
     swir1_num = find_central_band(value_array_of_all_band, z, SWIR1);
@@ -61,12 +61,12 @@ void cmr(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, f
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = clay_minerals_ratio(raw_data[i][j][swir1_num], raw_data[i][j][swir2_num]);
+            double a = clay_minerals_ratio(raw_data[i][j][swir1_num], raw_data[i][j][swir2_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void fmr(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void fmr(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int swir1_num, nir_num;
     swir1_num = find_central_band(value_array_of_all_band, z, SWIR1);
@@ -76,12 +76,12 @@ void fmr(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, f
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = ferrous_minerals_ratio(raw_data[i][j][swir1_num], raw_data[i][j][nir_num]);
+            double a = ferrous_minerals_ratio(raw_data[i][j][swir1_num], raw_data[i][j][nir_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void ior(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void ior(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int red_num, blue_num;
     red_num = find_central_band(value_array_of_all_band, z, RED);
@@ -91,12 +91,12 @@ void ior(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, f
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = iron_oxide_ratio(raw_data[i][j][red_num], raw_data[i][j][blue_num]);
+            double a = iron_oxide_ratio(raw_data[i][j][red_num], raw_data[i][j][blue_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void wv_ii(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void wv_ii(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int green_num, yellow_num, blue_num;
     green_num = find_central_band(value_array_of_all_band, z, GREEN);
@@ -107,12 +107,12 @@ void wv_ii(int ***raw_data, int x, int y, int z, float *value_array_of_all_band,
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = worldview_new_iron_index(raw_data[i][j][green_num], raw_data[i][j][yellow_num], raw_data[i][j][blue_num]);
+            double a = worldview_new_iron_index(raw_data[i][j][green_num], raw_data[i][j][yellow_num], raw_data[i][j][blue_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void wv_si(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void wv_si(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int green_num, yellow_num;
     green_num = find_central_band(value_array_of_all_band, z, GREEN);
@@ -122,12 +122,12 @@ void wv_si(int ***raw_data, int x, int y, int z, float *value_array_of_all_band,
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = worldview_soil_index(raw_data[i][j][green_num], raw_data[i][j][yellow_num]);
+            double a = worldview_soil_index(raw_data[i][j][green_num], raw_data[i][j][yellow_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void mndwi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void mndwi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int green_num, swir1_num;
     green_num = find_central_band(value_array_of_all_band, z, GREEN);
@@ -137,12 +137,12 @@ void mndwi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band,
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = modified_normalized_difference_water_index(raw_data[i][j][green_num], raw_data[i][j][swir1_num]);
+            double a = modified_normalized_difference_water_index(raw_data[i][j][green_num], raw_data[i][j][swir1_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void ndbi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void ndbi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int swir1_num, nir_num;
     swir1_num = find_central_band(value_array_of_all_band, z, SWIR1);
@@ -152,12 +152,12 @@ void ndbi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = normalized_difference_built_up_index(raw_data[i][j][swir1_num], raw_data[i][j][nir_num]);
+            double a = normalized_difference_built_up_index(raw_data[i][j][swir1_num], raw_data[i][j][nir_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void ndmi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void ndmi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p795_num, p990_num;
     p795_num = find_central_band(value_array_of_all_band, z, 795);
@@ -167,12 +167,12 @@ void ndmi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = normalized_difference_mud_index(raw_data[i][j][p795_num], raw_data[i][j][p990_num]);
+            double a = normalized_difference_mud_index(raw_data[i][j][p795_num], raw_data[i][j][p990_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void ndsi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void ndsi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int green_num, nir_num;
     green_num = find_central_band(value_array_of_all_band, z, GREEN);
@@ -182,12 +182,12 @@ void ndsi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = normalized_difference_snow_index(raw_data[i][j][green_num], raw_data[i][j][nir_num]);
+            double a = normalized_difference_snow_index(raw_data[i][j][green_num], raw_data[i][j][nir_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void wv_bi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void wv_bi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int coastal_num, red_edge_num;
     coastal_num = find_central_band(value_array_of_all_band, z, Coastal);
@@ -197,12 +197,12 @@ void wv_bi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band,
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = worldview_built_up_index(raw_data[i][j][coastal_num], raw_data[i][j][red_edge_num]);
+            double a = worldview_built_up_index(raw_data[i][j][coastal_num], raw_data[i][j][red_edge_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void wv_nhfd(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void wv_nhfd(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int coastal_num, red_edge_num;
     coastal_num = find_central_band(value_array_of_all_band, z, Coastal);
@@ -212,12 +212,12 @@ void wv_nhfd(int ***raw_data, int x, int y, int z, float *value_array_of_all_ban
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = worldView_non_homogeneous_feature_difference(raw_data[i][j][red_edge_num], raw_data[i][j][coastal_num]);
+            double a = worldView_non_homogeneous_feature_difference(raw_data[i][j][red_edge_num], raw_data[i][j][coastal_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void wv_wi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void wv_wi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int coastal_num, nir2_num;
     coastal_num = find_central_band(value_array_of_all_band, z, Coastal);
@@ -227,12 +227,12 @@ void wv_wi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band,
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = worldview_water_index(raw_data[i][j][coastal_num], raw_data[i][j][nir2_num]);
+            double a = worldview_water_index(raw_data[i][j][coastal_num], raw_data[i][j][nir2_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void arvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void arvi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int nir_num, red_num, blue_num;
     nir_num = find_central_band(value_array_of_all_band, z, NIR);
@@ -243,12 +243,12 @@ void arvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = atmospherically_resistant_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][red_num], raw_data[i][j][blue_num]);
+            double a = atmospherically_resistant_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][red_num], raw_data[i][j][blue_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void dvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void dvi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int nir_num, red_num;
     nir_num = find_central_band(value_array_of_all_band, z, NIR);
@@ -258,12 +258,12 @@ void dvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, f
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = difference_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
+            double a = difference_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void evi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void evi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int nir_num, red_num, blue_num;
     nir_num = find_central_band(value_array_of_all_band, z, NIR);
@@ -274,12 +274,12 @@ void evi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, f
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = enhanced_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][red_num], raw_data[i][j][blue_num]);
+            double a = enhanced_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][red_num], raw_data[i][j][blue_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void gemi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void gemi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int nir_num, red_num;
     nir_num = find_central_band(value_array_of_all_band, z, NIR);
@@ -289,12 +289,12 @@ void gemi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = global_environmental_monitoring_index(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
+            double a = global_environmental_monitoring_index(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void gari(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void gari(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int nir_num, red_num, green_num, blue_num;
     nir_num = find_central_band(value_array_of_all_band, z, NIR);
@@ -306,12 +306,12 @@ void gari(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = green_atmospherically_resistant_index(raw_data[i][j][nir_num], raw_data[i][j][red_num], raw_data[i][j][green_num], raw_data[i][j][blue_num]);
+            double a = green_atmospherically_resistant_index(raw_data[i][j][nir_num], raw_data[i][j][red_num], raw_data[i][j][green_num], raw_data[i][j][blue_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void gdvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void gdvi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int nir_num, green_num;
     nir_num = find_central_band(value_array_of_all_band, z, NIR);
@@ -321,12 +321,12 @@ void gdvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = green_difference_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][green_num]);
+            double a = green_difference_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][green_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void gndvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void gndvi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int nir_num, green_num;
     nir_num = find_central_band(value_array_of_all_band, z, NIR);
@@ -336,12 +336,12 @@ void gndvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band,
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = green_normalized_difference_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][green_num]);
+            double a = green_normalized_difference_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][green_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void grvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void grvi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int nir_num, green_num;
     nir_num = find_central_band(value_array_of_all_band, z, NIR);
@@ -351,17 +351,17 @@ void grvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = green_ratio_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][green_num]);
+            double a = green_ratio_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][green_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
 //----------------------------------------------------------------
-void gvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void gvi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
 }
 //----------------------------------------------------------------
-void ipvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void ipvi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int nir_num, red_num;
     nir_num = find_central_band(value_array_of_all_band, z, NIR);
@@ -371,12 +371,12 @@ void ipvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = infrared_percentage_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
+            double a = infrared_percentage_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void lai(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void lai(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int nir_num, red_num, blue_num;
     nir_num = find_central_band(value_array_of_all_band, z, NIR);
@@ -387,12 +387,12 @@ void lai(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, f
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = leaf_area_index(raw_data[i][j][nir_num], raw_data[i][j][red_num], raw_data[i][j][blue_num]);
+            double a = leaf_area_index(raw_data[i][j][nir_num], raw_data[i][j][red_num], raw_data[i][j][blue_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void mnli(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void mnli(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int nir_num, red_num;
     nir_num = find_central_band(value_array_of_all_band, z, NIR);
@@ -402,12 +402,12 @@ void mnli(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = modified_non_linear_index(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
+            double a = modified_non_linear_index(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void msr(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void msr(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int nir_num, red_num;
     nir_num = find_central_band(value_array_of_all_band, z, NIR);
@@ -417,12 +417,12 @@ void msr(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, f
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = modified_simple_ratio(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
+            double a = modified_simple_ratio(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void nli(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void nli(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int nir_num, red_num;
     nir_num = find_central_band(value_array_of_all_band, z, NIR);
@@ -432,12 +432,12 @@ void nli(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, f
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = non_linear_index(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
+            double a = non_linear_index(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void ndvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void ndvi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int red_num, nir_num;
     red_num = find_central_band(value_array_of_all_band, z, RED);
@@ -447,12 +447,12 @@ void ndvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = normalized_difference_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
+            double a = normalized_difference_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void osavi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void osavi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int nir_num, red_num;
     nir_num = find_central_band(value_array_of_all_band, z, NIR);
@@ -462,12 +462,12 @@ void osavi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band,
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = optimized_soil_adjusted_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
+            double a = optimized_soil_adjusted_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void rdvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void rdvi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int nir_num, red_num;
     nir_num = find_central_band(value_array_of_all_band, z, NIR);
@@ -477,12 +477,12 @@ void rdvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = renormalized_difference_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
+            double a = renormalized_difference_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void savi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void savi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int nir_num, red_num;
     nir_num = find_central_band(value_array_of_all_band, z, NIR);
@@ -492,12 +492,12 @@ void savi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = soil_adjusted_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
+            double a = soil_adjusted_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void sr(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void sr(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int nir_num, red_num;
     nir_num = find_central_band(value_array_of_all_band, z, NIR);
@@ -507,15 +507,15 @@ void sr(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, fl
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = simple_ratio(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
+            double a = simple_ratio(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void sgi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void sgi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int a, b, c, d, n, m;
-    float sgi;
+    double sgi;
     c = 0;
     d = 0;
     for (int i = 0; i < x; ++i)
@@ -530,13 +530,13 @@ void sgi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, f
                     c += raw_data[i][j][z]; // 绿光
                     n++;
                 }
-                sgi = (float)c / (float)n;
+                sgi = (double)c / (double)n;
                 result[i][j] = transform_to_six_decimal_places(sgi);
             }
         }
     }
 }
-void tdvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void tdvi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int nir_num, red_num;
     nir_num = find_central_band(value_array_of_all_band, z, NIR);
@@ -546,12 +546,12 @@ void tdvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = Transformed_difference_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
+            double a = Transformed_difference_vegetation_index(raw_data[i][j][nir_num], raw_data[i][j][red_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void vari(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void vari(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int red_num, green_num, blue_num;
     green_num = find_central_band(value_array_of_all_band, z, GREEN);
@@ -562,12 +562,12 @@ void vari(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = visible_atmospherically_resistant_index(raw_data[i][j][red_num], raw_data[i][j][green_num], raw_data[i][j][blue_num]);
+            double a = visible_atmospherically_resistant_index(raw_data[i][j][red_num], raw_data[i][j][green_num], raw_data[i][j][blue_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void wv_vi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void wv_vi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int nir2_num, red_num;
     nir2_num = find_central_band(value_array_of_all_band, z, NIR2);
@@ -577,12 +577,12 @@ void wv_vi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band,
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = worldview_improved_vegetative_index(raw_data[i][j][nir2_num], raw_data[i][j][red_num]);
+            double a = worldview_improved_vegetative_index(raw_data[i][j][nir2_num], raw_data[i][j][red_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void mcari(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void mcari(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p550_num, p670_num, p700_num;
     p550_num = find_central_band(value_array_of_all_band, z, 550);
@@ -593,12 +593,12 @@ void mcari(int ***raw_data, int x, int y, int z, float *value_array_of_all_band,
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = modified_chlorophyll_absorption_ratio_index(raw_data[i][j][p550_num], raw_data[i][j][p670_num], raw_data[i][j][p700_num]);
+            double a = modified_chlorophyll_absorption_ratio_index(raw_data[i][j][p550_num], raw_data[i][j][p670_num], raw_data[i][j][p700_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void mcari2(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void mcari2(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p550_num, p670_num, p800_num;
     p550_num = find_central_band(value_array_of_all_band, z, 550);
@@ -609,12 +609,12 @@ void mcari2(int ***raw_data, int x, int y, int z, float *value_array_of_all_band
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = modified_chlorophyll_absorption_ratio_index_improved(raw_data[i][j][p550_num], raw_data[i][j][p670_num], raw_data[i][j][p800_num]);
+            double a = modified_chlorophyll_absorption_ratio_index_improved(raw_data[i][j][p550_num], raw_data[i][j][p670_num], raw_data[i][j][p800_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void mrendvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void mrendvi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p445_num, p705_num, p750_num;
     p445_num = find_central_band(value_array_of_all_band, z, 445);
@@ -625,12 +625,12 @@ void mrendvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_ban
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = modified_red_edge_normalized_difference_vegetation_index(raw_data[i][j][p445_num], raw_data[i][j][p705_num], raw_data[i][j][p750_num]);
+            double a = modified_red_edge_normalized_difference_vegetation_index(raw_data[i][j][p445_num], raw_data[i][j][p705_num], raw_data[i][j][p750_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void mresr(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void mresr(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p445_num, p705_num, p750_num;
     p445_num = find_central_band(value_array_of_all_band, z, 445);
@@ -641,12 +641,12 @@ void mresr(int ***raw_data, int x, int y, int z, float *value_array_of_all_band,
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = modified_red_edge_simple_ratio(raw_data[i][j][p445_num], raw_data[i][j][p705_num], raw_data[i][j][p750_num]);
+            double a = modified_red_edge_simple_ratio(raw_data[i][j][p445_num], raw_data[i][j][p705_num], raw_data[i][j][p750_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void mtvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void mtvi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p550_num, p670_num, p800_num;
     p550_num = find_central_band(value_array_of_all_band, z, 550);
@@ -657,12 +657,12 @@ void mtvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = modified_triangular_vegetation_index(raw_data[i][j][p550_num], raw_data[i][j][p670_num], raw_data[i][j][p800_num]);
+            double a = modified_triangular_vegetation_index(raw_data[i][j][p550_num], raw_data[i][j][p670_num], raw_data[i][j][p800_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void mtvi2(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void mtvi2(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p550_num, p670_num, p800_num;
     p550_num = find_central_band(value_array_of_all_band, z, 550);
@@ -673,12 +673,12 @@ void mtvi2(int ***raw_data, int x, int y, int z, float *value_array_of_all_band,
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = modified_triangular_vegetation_index_improved(raw_data[i][j][p550_num], raw_data[i][j][p670_num], raw_data[i][j][p800_num]);
+            double a = modified_triangular_vegetation_index_improved(raw_data[i][j][p550_num], raw_data[i][j][p670_num], raw_data[i][j][p800_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void rendvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void rendvi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p705_num, p750_num;
     p705_num = find_central_band(value_array_of_all_band, z, 705);
@@ -688,48 +688,48 @@ void rendvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = red_edge_normalized_difference_vegetation_index(raw_data[i][j][p705_num], raw_data[i][j][p750_num]);
+            double a = red_edge_normalized_difference_vegetation_index(raw_data[i][j][p705_num], raw_data[i][j][p750_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
 
 //----------------------------------------------------------------
-void repi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void repi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
-    // int a;
-    // float dx, dy;
-    // vector<float> reflectances;
-    // vector<float> wavelengths;
-    // vector<float> derivatives(wavelengths.size() - 1);
-    // for (int i = 0; i < x; ++i)
-    // {
-    //     for (int j = 0; j < y; ++j)
-    //     {
-    //         for (int k = 0; k < z; ++k)
-    //         {
-    //             a = value_array_of_all_band[k];
-    //             if (a >= 690 && a <= 740)
-    //             {
-    //                 reflectances.push_back((float)raw_data[i][j][k]);
-    //                 wavelengths.push_back(a);
-    //             }
-    //         }
-    //         for (int b = 0; b < wavelengths.size() - 1; ++b)
-    //         {
-    //             dx = wavelengths[b + 1] - wavelengths[b];
-    //             dy = reflectances[b + 1] - reflectances[b];
-    //             derivatives[b] = dy / dx;
-    //         }
-    //         auto maxIt = max_element(derivatives.begin(), derivatives.end());
-    //         size_t maxIndex = distance(derivatives.begin(), maxIt);
-    //         result[i][j] = (wavelengths[maxIndex] + wavelengths[maxIndex + 1]) / 2.0;
-    //     }
-    // }
+    double a;
+    double dx, dy;
+    vector<double> reflectances;
+    vector<double> wavelengths;
+    vector<double> derivatives(wavelengths.size() - 1);
+    for (int i = 0; i < x; ++i)
+    {
+        for (int j = 0; j < y; ++j)
+        {
+            for (int k = 0; k < z; ++k)
+            {
+                a = value_array_of_all_band[k];
+                if (a >= 690 && a <= 740)
+                {
+                    reflectances.push_back((double)raw_data[i][j][k]);
+                    wavelengths.push_back(a);
+                }
+            }
+            for (int b = 0; b < wavelengths.size() - 1; ++b)
+            {
+                dx = wavelengths[b + 1] - wavelengths[b];
+                dy = reflectances[b + 1] - reflectances[b];
+                derivatives[b] = dy / dx;
+            }
+            auto maxIt = max_element(derivatives.begin(), derivatives.end());
+            size_t maxIndex = distance(derivatives.begin(), maxIt);
+            result[i][j] = (wavelengths[maxIndex] + wavelengths[maxIndex + 1]) / 2.0;
+        }
+    }
 }
 //----------------------------------------------------------------
 
-void tcari(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void tcari(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p550_num, p670_num, p700_num;
     p550_num = find_central_band(value_array_of_all_band, z, 550);
@@ -740,12 +740,12 @@ void tcari(int ***raw_data, int x, int y, int z, float *value_array_of_all_band,
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = transformed_chlorophyll_absorption_reflectance_index(raw_data[i][j][p550_num], raw_data[i][j][p670_num], raw_data[i][j][p700_num]);
+            double a = transformed_chlorophyll_absorption_reflectance_index(raw_data[i][j][p550_num], raw_data[i][j][p670_num], raw_data[i][j][p700_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void tvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void tvi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p550_num, p670_num, p750_num;
     p550_num = find_central_band(value_array_of_all_band, z, 550);
@@ -756,12 +756,12 @@ void tvi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, f
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = triangular_vegetation_index(raw_data[i][j][p550_num], raw_data[i][j][p670_num], raw_data[i][j][p750_num]);
+            double a = triangular_vegetation_index(raw_data[i][j][p550_num], raw_data[i][j][p670_num], raw_data[i][j][p750_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void vrei1(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void vrei1(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p720_num, p740_num;
     p720_num = find_central_band(value_array_of_all_band, z, 720);
@@ -771,12 +771,12 @@ void vrei1(int ***raw_data, int x, int y, int z, float *value_array_of_all_band,
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = vogelmann_red_edge_index_1(raw_data[i][j][p720_num], raw_data[i][j][p740_num]);
+            double a = vogelmann_red_edge_index_1(raw_data[i][j][p720_num], raw_data[i][j][p740_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void vrei2(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void vrei2(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p715_num, p726_num, p734_num, p747_num;
     p715_num = find_central_band(value_array_of_all_band, z, 715);
@@ -788,12 +788,12 @@ void vrei2(int ***raw_data, int x, int y, int z, float *value_array_of_all_band,
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = vogelmann_red_edge_index_2(raw_data[i][j][p715_num], raw_data[i][j][p726_num], raw_data[i][j][p734_num], raw_data[i][j][p747_num]);
+            double a = vogelmann_red_edge_index_2(raw_data[i][j][p715_num], raw_data[i][j][p726_num], raw_data[i][j][p734_num], raw_data[i][j][p747_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void ndni(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void ndni(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p1510_num, p1680_num;
     p1510_num = find_central_band(value_array_of_all_band, z, 1510);
@@ -803,12 +803,12 @@ void ndni(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = normalized_difference_nitrogen_index(raw_data[i][j][p1510_num], raw_data[i][j][p1680_num]);
+            double a = normalized_difference_nitrogen_index(raw_data[i][j][p1510_num], raw_data[i][j][p1680_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void msi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void msi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p1599_num, p819_num;
     p1599_num = find_central_band(value_array_of_all_band, z, 1599);
@@ -818,12 +818,12 @@ void msi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, f
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = moisture_stress_index(raw_data[i][j][p1599_num], raw_data[i][j][p819_num]);
+            double a = moisture_stress_index(raw_data[i][j][p1599_num], raw_data[i][j][p819_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void ndii(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void ndii(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p819_num, p1649_num;
     p819_num = find_central_band(value_array_of_all_band, z, 819);
@@ -833,12 +833,12 @@ void ndii(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = normalized_difference_infrared_index(raw_data[i][j][p819_num], raw_data[i][j][p1649_num]);
+            double a = normalized_difference_infrared_index(raw_data[i][j][p819_num], raw_data[i][j][p1649_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void ndwi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void ndwi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p857_num, p1241_num;
     p857_num = find_central_band(value_array_of_all_band, z, 857);
@@ -848,12 +848,12 @@ void ndwi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = normalized_difference_water_index(raw_data[i][j][p857_num], raw_data[i][j][p1241_num]);
+            double a = normalized_difference_water_index(raw_data[i][j][p857_num], raw_data[i][j][p1241_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void nmdi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void nmdi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p860_num, p1640_num, p2130_num;
     p860_num = find_central_band(value_array_of_all_band, z, 860);
@@ -864,12 +864,12 @@ void nmdi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = normalized_multi_band_drought_index(raw_data[i][j][p860_num], raw_data[i][j][p1640_num], raw_data[i][j][p2130_num]);
+            double a = normalized_multi_band_drought_index(raw_data[i][j][p860_num], raw_data[i][j][p1640_num], raw_data[i][j][p2130_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void wbi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void wbi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p900_num, p970_num;
     p900_num = find_central_band(value_array_of_all_band, z, 900);
@@ -879,12 +879,12 @@ void wbi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, f
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = water_band_index(raw_data[i][j][p900_num], raw_data[i][j][p970_num]);
+            double a = water_band_index(raw_data[i][j][p900_num], raw_data[i][j][p970_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void ndli(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void ndli(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p1680_num, p1754_num;
     p1680_num = find_central_band(value_array_of_all_band, z, 1680);
@@ -894,12 +894,12 @@ void ndli(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = normalized_difference_lignin_index(raw_data[i][j][p1680_num], raw_data[i][j][p1754_num]);
+            double a = normalized_difference_lignin_index(raw_data[i][j][p1680_num], raw_data[i][j][p1754_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void cai(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void cai(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p2000_num, p2100_num, p2200_num;
     p2000_num = find_central_band(value_array_of_all_band, z, 2000);
@@ -910,12 +910,12 @@ void cai(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, f
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = cellulose_absorption_index(raw_data[i][j][p2000_num], raw_data[i][j][p2100_num], raw_data[i][j][p2200_num]);
+            double a = cellulose_absorption_index(raw_data[i][j][p2000_num], raw_data[i][j][p2100_num], raw_data[i][j][p2200_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void psri(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void psri(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p500_num, p680_num, p750_num;
     p500_num = find_central_band(value_array_of_all_band, z, 500);
@@ -926,12 +926,12 @@ void psri(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = plant_senescence_reflectance_index(raw_data[i][j][p500_num], raw_data[i][j][p680_num], raw_data[i][j][p750_num]);
+            double a = plant_senescence_reflectance_index(raw_data[i][j][p500_num], raw_data[i][j][p680_num], raw_data[i][j][p750_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void ari1(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void ari1(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p550_num, p700_num;
     p550_num = find_central_band(value_array_of_all_band, z, 550);
@@ -941,12 +941,12 @@ void ari1(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = anthocyanin_reflectance_index_1(raw_data[i][j][p550_num], raw_data[i][j][p700_num]);
+            double a = anthocyanin_reflectance_index_1(raw_data[i][j][p550_num], raw_data[i][j][p700_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void ari2(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void ari2(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p550_num, p700_num, p800_num;
     p550_num = find_central_band(value_array_of_all_band, z, 550);
@@ -957,12 +957,12 @@ void ari2(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = anthocyanin_reflectance_index_2(raw_data[i][j][p550_num], raw_data[i][j][p700_num], raw_data[i][j][p800_num]);
+            double a = anthocyanin_reflectance_index_2(raw_data[i][j][p550_num], raw_data[i][j][p700_num], raw_data[i][j][p800_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void cri1(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void cri1(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p510_num, p550_num;
     p510_num = find_central_band(value_array_of_all_band, z, 510);
@@ -972,12 +972,12 @@ void cri1(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = carotenoid_reflectance_index_1(raw_data[i][j][p510_num], raw_data[i][j][p550_num]);
+            double a = carotenoid_reflectance_index_1(raw_data[i][j][p510_num], raw_data[i][j][p550_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void cri2(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void cri2(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p510_num, p700_num;
     p510_num = find_central_band(value_array_of_all_band, z, 510);
@@ -987,12 +987,12 @@ void cri2(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = carotenoid_reflectance_index_2(raw_data[i][j][p510_num], raw_data[i][j][p700_num]);
+            double a = carotenoid_reflectance_index_2(raw_data[i][j][p510_num], raw_data[i][j][p700_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void pri(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void pri(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p531_num, p570_num;
     p531_num = find_central_band(value_array_of_all_band, z, 531);
@@ -1002,12 +1002,12 @@ void pri(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, f
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = photochemical_reflectance_index(raw_data[i][j][p531_num], raw_data[i][j][p570_num]);
+            double a = photochemical_reflectance_index(raw_data[i][j][p531_num], raw_data[i][j][p570_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void sipi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void sipi(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int p445_num, p680_num, p800_num;
     p445_num = find_central_band(value_array_of_all_band, z, 445);
@@ -1018,15 +1018,15 @@ void sipi(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
     {
         for (int j = 0; j < y; ++j)
         {
-            float a = structure_insensitive_pigment_index(raw_data[i][j][p445_num], raw_data[i][j][p680_num], raw_data[i][j][p800_num]);
+            double a = structure_insensitive_pigment_index(raw_data[i][j][p445_num], raw_data[i][j][p680_num], raw_data[i][j][p800_num]);
             result[i][j] = transform_to_six_decimal_places(a);
         }
     }
 }
-void rgri(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, float **result)
+void rgri(int ***raw_data, int x, int y, int z, double *value_array_of_all_band, double **result)
 {
     int a, b, c, d, n, m;
-    float rgri;
+    double rgri;
     c = 0;
     d = 0;
     for (int i = 0; i < x; ++i)
@@ -1046,7 +1046,7 @@ void rgri(int ***raw_data, int x, int y, int z, float *value_array_of_all_band, 
                     d += raw_data[i][j][z]; // 绿光
                     m++;
                 }
-                rgri = ((float)c / (float)n) / ((float)d / (float)m);
+                rgri = ((double)c / (double)n) / ((double)d / (double)m);
                 result[i][j] = transform_to_six_decimal_places(rgri);
             }
         }

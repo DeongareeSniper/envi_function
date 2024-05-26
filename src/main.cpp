@@ -1,4 +1,5 @@
 #include "../include/SpectralIndices_interface.h"
+#include <iomanip>
 using namespace std;
 
 // 以下为一个计算NDVI的示例，可以作为如何使用本函数库的参考示例
@@ -6,17 +7,17 @@ using namespace std;
 int main(int argc, const char **argv)
 {
     int raw[2][2][5] = {
-        {{0, 289, 0, 3550, 0},
-         {0, 232, 0, 2769, 0}},
-        {{0, 1453, 0, 1986, 0},
-         {0, 3273, 0, 3419, 0}}};
-    // float result[2][2];
-    float **result = new float *[2];
+        {{390, 638, 858, 2931, 2772},
+         {0, 304, 562, 3288, 3346}},
+        {{164, 372, 637, 3329, 3123},
+         {3047, 3115, 3153, 3562, 3339}}};
+    // double result[2][2];
+    double **result = new double *[2];
     for (int i = 0; i < 2; ++i)
     {
-        result[i] = new float[2];
+        result[i] = new double[2];
     }
-    float a[5] = {600, 649, 800, 850, 960};
+    double a[5] = {420.0348, 650.4232, 555.0990, 859.4069, 1019.4377};
     int ***raw_data = new int **[2];
     for (int i = 0; i < 2; ++i)
     {
@@ -30,12 +31,12 @@ int main(int argc, const char **argv)
             }
         }
     }
-    spectral_index_calculation(raw_data, 2, 2, 5, a, NDVI, result);
+    spectral_index_calculation(raw_data, 2, 2, 5, a, RDVI, result);
     for (int i = 0; i < 2; i++)
     {
         for (int j = 0; j < 2; j++)
         {
-            cout << "ndvi is " << result[i][j] << endl;
+            cout << "ndvi is " << setprecision(8) << result[i][j] << endl;
         }
     }
     for (int i = 0; i < 2; ++i)
